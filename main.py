@@ -7,8 +7,8 @@ import sys
 image_path = sys.argv[1]
 
 detectarEspecie = 'python label_image.py \
-					--graph=retrain/especies_graph.pb \
-					--labels=retrain/especies_labels.txt \
+					--graph=modelos/especies_graph.pb \
+					--labels=modelos/especies_labels.txt \
 					--input_layer=Placeholder \
 					--output_layer=final_result \
 					--image='+image_path
@@ -22,15 +22,15 @@ result = str(output[0])
 result = result.split('\n')
 deteccion = result[0]
 
-print("Deteccion: " + deteccion)
+print(deteccion)
 
 especieDetectada = deteccion.split(' ')[0]
 
 if (especieDetectada=='tomate' or especieDetectada=='morron'):
 	print("Analizando madurez...")
 	detectarMadurez = 'python label_image.py \
-					--graph=retrain/madurez_'+ especieDetectada +'_graph.pb \
-					--labels=retrain/madurez_'+ especieDetectada +'_labels.txt \
+					--graph=modelos/madurez_'+ especieDetectada +'_graph.pb \
+					--labels=modelos/madurez_'+ especieDetectada +'_labels.txt \
 					--input_layer=Placeholder \
 					--output_layer=final_result \
 					--image='+image_path

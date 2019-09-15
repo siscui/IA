@@ -1,2 +1,0 @@
-# IA
-Clasificacion de plantas 

@@ -7,39 +7,39 @@ import sys
 image_path = sys.argv[1]
 
 detectarEspecie = 'python label_image.py \
-					--graph=modelos/especies_graph.pb \
-					--labels=modelos/especies_labels.txt \
-					--input_layer=Placeholder \
-					--output_layer=final_result \
-					--image='+image_path
+                    --graph=modelos/especies_graph.pb \
+                    --labels=modelos/especies_labels.txt \
+                    --input_layer=Placeholder \
+                    --output_layer=final_result \
+                    --image=' + image_path
 
 print("Detectando especie...")
-process = subprocess.Popen(detectarEspecie, stdout=subprocess.PIPE, stderr=None, shell=True)
 
-output = process.communicate()
 
-result = str(output[0])
-result = result.split('\n')
-deteccion = result[0]
+def getresult(input_process):
+    output = input_process.communicate()[0]
+    output = output.decode()
+    result = output.split('\n')
+    return result[0]
 
-print(deteccion)
 
-especieDetectada = deteccion.split(' ')[0]
+process_detection = subprocess.Popen(detectarEspecie, stdout=subprocess.PIPE, stderr=None, shell=True)
 
-if (especieDetectada=='tomate' or especieDetectada=='morron'):
-	print("Analizando madurez...")
-	detectarMadurez = 'python label_image.py \
-					--graph=modelos/madurez_'+ especieDetectada +'_graph.pb \
-					--labels=modelos/madurez_'+ especieDetectada +'_labels.txt \
-					--input_layer=Placeholder \
-					--output_layer=final_result \
-					--image='+image_path
-	
-	process = subprocess.Popen(detectarMadurez, stdout=subprocess.PIPE, stderr=None, shell=True)
+detection = getresult(process_detection)
 
-	output = process.communicate()
-	result = str(output[0])
-	result = result.split('\n')
-	madurez = result[0]
+detected_species = detection.split(' ')[0]
+print("especie detectada " + detection)
 
-	print(madurez)
+if detected_species == 'tomate' or detected_species == 'morron':
+    print("Analizando madurez...")
+    detectarMadurez = 'python label_image.py \
+                    --graph=modelos/madurez_' + detected_species + '_graph.pb \
+                    --labels=modelos/madurez_' + detected_species + '_labels.txt \
+                    --input_layer=Placeholder \
+                    --output_layer=final_result \
+                    --image=' + image_path
+
+    process_mature = subprocess.Popen(detectarMadurez, stdout=subprocess.PIPE, stderr=None, shell=True)
+
+    mature = getresult(process_mature)
+    print(mature)

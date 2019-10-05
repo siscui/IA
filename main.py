@@ -27,7 +27,7 @@ def detect_specie(image_path):
 
 def detected_mature(detected_species):
     if detected_species == 'tomate' or detected_species == 'morron':
-        print("Analizando madurez...")
+        # print("Analizando madurez...")
         detectarMadurez = 'python label_image.py \
                     --graph=modelos/madurez_' + detected_species + '_graph.pb \
                     --labels=modelos/madurez_' + detected_species + '_labels.txt \
@@ -36,15 +36,16 @@ def detected_mature(detected_species):
                     --image=' + image_path
 
         mature = getresult(detectarMadurez)
-        detected_matures = mature.split(' ')[0]
-        return detected_matures
+        # detected_matures = mature.split(' ')[0]
+        return mature
 
 
 image_path = sys.argv[1]
-print("Detectando especie...")
+# print("Detectando especie...")
 
 result_detection = detect_specie(image_path)
-print("especie detectada " + result_detection)
+# print("especie detectada " + result_detection)
+print(result_detection)
 
 result_mature = detected_mature(result_detection)
 print(result_mature)

@@ -37,6 +37,7 @@ def detect_specie(image_path):
     detected_species = detection.split(' ')[0]
     return detected_species
 
+
 # def detected_mature(detected_species):
 #     if detected_species == 'tomate' or detected_species == 'morron':
 #         # print("Analizando madurez...")
@@ -54,11 +55,10 @@ def detect_specie(image_path):
 
 # MobileNet 100-160
 # python -m scripts.label_image --graph=tf_files\detect_specie_mobilenet_100_160.pb --image=tf_files\cactus1.jpg
-#python -m scripts.label_image --graph=tf_files\maduro_tomate_100_160.pb --labels=tf_files\maduro_tomate_100_160.txt --image=tf_files\tomate1.jpg
+# python -m scripts.label_image --graph=tf_files\maduro_tomate_100_160.pb --labels=tf_files\maduro_tomate_100_160.txt --image=tf_files\tomate1.jpg
 
 def detected_mature(detected_species):
-
-    if detected_species == 'tomate' :
+    if detected_species == 'tomate':
         # print("Analizando madurez...")
         detectarMadurez = 'python -m scripts.label_image \
                     --graph=modelos\maduro_tomate_100_160.pb \
@@ -66,9 +66,11 @@ def detected_mature(detected_species):
                     --image=' + image_path
 
         mature = getresult(detectarMadurez)
-        # detected_matures = mature.split(' ')[0]
-        return mature
-    if detected_species == 'morron' :
+        detected_matures = mature.split(' ')[0]
+        # return mature
+        return detected_matures
+
+    if detected_species == 'morron':
         # print("Analizando madurez...")
         detectarMadurez = 'python label_image.py \
                     --graph=modelos/madurez_' + detected_species + '_graph.pb \
@@ -82,12 +84,22 @@ def detected_mature(detected_species):
         return mature
 
 
+def analizar_planta(image_path):
+    result_detection = detect_specie(image_path)
+    result_mature = detected_mature(result_detection)
+    result = (result_detection, result_mature)
+    return result
+
+
 image_path = sys.argv[1]
 # print("Detectando especie...")
 
-result_detection = detect_specie(image_path)
-# print("especie detectada " + result_detection)
-print(result_detection)
+# result_detection = detect_specie(image_path)
+# # print("especie detectada " + result_detection)
+# print(result_detection)
+#
+# result_mature = detected_mature(result_detection)
+# print(result_mature)
 
-result_mature = detected_mature(result_detection)
-print(result_mature)
+result = analizar_planta(image_path)
+print("Resultado de la Tupla: %s" % (result,))

@@ -30,8 +30,8 @@ def getresult(model):
 # python -m scripts.label_image --graph=modelos\detect_specie_mobilenet_100_160.pb --image=clasificar\morron1.jpg
 def detect_specie(image_path):
     detectarEspecie = 'python -m scripts.label_image \
-                    --graph=modelos\detect_specie_mobilenet_100_160.pb \
-                    --labels=modelos\detect_specie_mobilenet_100_160.txt \
+                    --graph=modelos\detecta_especie.pb \
+                    --labels=modelos\detecta_especie.txt \
                     --image=' + image_path
     detection = getresult(detectarEspecie)
     detected_species = detection.split(' ')[0]
@@ -61,8 +61,8 @@ def detected_mature(detected_species):
     if detected_species == 'tomate':
         # print("Analizando madurez...")
         detectarMadurez = 'python -m scripts.label_image \
-                    --graph=modelos\maduro_tomate_100_160.pb \
-                    --labels=modelos\maduro_tomate_100_160.txt \
+                    --graph=modelos\madurez_tomate.pb \
+                    --labels=modelos\madurez_tomate.txt \
                     --image=' + image_path
 
         mature = getresult(detectarMadurez)

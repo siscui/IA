@@ -71,8 +71,8 @@ if __name__ == "__main__":
   file_name = "tf_files/flower_photos/daisy/3475870145_685a19116d.jpg"
   model_file = "modelos/detect_specie_mobilenet_100_160.pb"
   label_file = "modelos/detect_specie_mobilenet_100_160.txt"
-  input_height = 160
-  input_width = 160
+  input_height = 224
+  input_width = 224
   input_mean = 128
   input_std = 128
   input_layer = "input"
